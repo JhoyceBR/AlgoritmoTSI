@@ -5,19 +5,17 @@ for i in range(n):
     b = l[1]
     s = ""
 
-    menor = min(len(a), len(b))
-    maior = max(len(a), len(b))
-    for i in range(menor):
-        s += a[i] + b[i]
     if(len(a)==len(b)):
-        pass
-    
+        for i in range(len(a)):
+            s += a[i] + b[i]    
     elif(len(a)>len(b)):
-        diferenca = len(a)-len(b)
-        s += a[diferenca:]
+        for i in range(len(b)):
+            s += a[i] + b[i]
+        s += a[len(b):]
+
     elif(len(b)>len(a)):
-        diferenca = len(b)-len(a)
-        s += b[diferenca:]
-    
+        for i in range(len(a)):
+            s += a[i] + b[i]
+        s += b[len(a):]
     
     print(s)
