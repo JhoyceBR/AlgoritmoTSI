@@ -15,15 +15,17 @@ def selectionSort(lista):
         if lista[j] > lista[IndexMinimo]:
             lista[j], lista[IndexMinimo] = lista[IndexMinimo], lista[j]
 
+
 # Algoritmo de ordenação Bubble
 
 def bubbleSort(lista):
     tamanho = len(lista)
-
+    
     for j in range(tamanho-1):
         for i in range(tamanho-1):
             if lista[i] > lista[i+1]:
                 lista[i], lista[i+1] = lista[i+1], lista[i]
+                
 
 # Algoritmo de ordenação Insertion 
 
@@ -37,6 +39,7 @@ def insertionSort(lista):
             lista[j+1] = lista[j]
             j -= 1
         lista[j+1] = chave
+        
 
 # Algoritmo de ordenação Merge
 
@@ -66,6 +69,7 @@ def merge(lista, inicio, meio, fim):
         else:
             lista[k] = right[top_right]
             top_right = top_right + 1
+
 
 # Algoritmo de ordenação Quick
 
