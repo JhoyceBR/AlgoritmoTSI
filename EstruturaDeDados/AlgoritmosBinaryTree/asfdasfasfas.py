@@ -1,9 +1,3 @@
-# Não sei como o minimum e o maximum funcionam com esse código
-# e também acho que o tree successor e o tree 
-# predeccessor não estão funcionando, mas está aí
-# o que anotei das aulas. Até tentei de outras formas
-# com outros algoritmos mas ainda não funcionava. 
-# Desculpe desde já. 
 
 class Node(): # cria nó 
     def __init__(self, chave):
@@ -19,7 +13,7 @@ class Tree(): # inicia a arvore com o nó raiz
     def __init__(self):
         self.raiz = None # raiz começa None
 
-    # inserção, transplante, remoção e busca. 
+
     def TreeInsert(self, chave, node=None): # insere um nó na árvore
         
         if (node is None):
@@ -75,7 +69,7 @@ class Tree(): # inicia a arvore com o nó raiz
             y.esquerda.pai = y
 
 
-    def interative_tree_search(self, chave): # busca binária iterativa
+    def interative_tree_search(self, chave):
 
         if (self.raiz == None):
             return None
@@ -88,8 +82,6 @@ class Tree(): # inicia a arvore com o nó raiz
                 vertice = vertice.direita
         
         return vertice
-
-    # caminhada pela árvore: in-order, decrescente, pré-order e pós-order
 
     def inorder_tree_walk(self, vertice=None): # esquerda, raiz, direita
 
@@ -106,7 +98,7 @@ class Tree(): # inicia a arvore com o nó raiz
         return vertice
 
 
-    def decrescente_tree_walk(self, vertice=None): # retorna em ordem decrescente 
+    def decrescente_tree_walk(self, vertice=None):
 
         if (self.raiz == None):
             return
@@ -146,75 +138,61 @@ class Tree(): # inicia a arvore com o nó raiz
         if (vertice.direita != None):
             self.posorder_tree_walk(vertice=vertice.direita)
         print(vertice)
-
-    # mininum e maximum 
-
-    def mininum_recursiva(self, vertice=None):
-        if (vertice.esquerda is None):
-            return vertice
+        
+        
+    def minimum(self, vertice=None):
+        if vertice is None:
+            vertice = self.raiz
+        if vertice.direita is not None:
+            vertice = vertice.direita
         else:
-            return self.mininum_recursiva(vertice=vertice.esquerda)
+            return vertice
+        
+        if vertice.esquerda is not None:
+            return self.minimum(vertice=vertice.esquerda)
+        else:
+            return vertice
         
 
-    def tree_mininum(self, vertice=None):
+    def maximum(self, vertice=None):
         if (self.raiz == None):
             return None
         if (vertice == None):
             vertice = self.raiz
-        while (vertice.esquerda is not None):
-            vertice = vertice.esquerda
-        return vertice
 
-
-    def tree_maximun(self, vertice=None):
-        if (self.raiz == None):
-            return None
-        if (vertice == None):
-            vertice = self.raiz
-        while (vertice.direita is not None):
+        while (vertice.direita != None):
             vertice = vertice.direita
         return vertice
 
-    '''    
-    teste de outro tree minimum
-    
 
-    def minimo(self, vertice):
-        current = vertice
+    # consertar função minumum e maximum
+    def tree_sucessor(self, vertice):
 
-        while (current is not None):
-            if (current.esquerda is not None):
-                break
-            current = current.esquerda
-        return current
-    '''
-    # tree-sucessor e tree-predecessor
-
-    def tree_successor(self, vertice=None):
         if (vertice.direita is not None):
-            return self.tree_mininum(vertice=vertice.direita)
-        y = vertice.pai
+            return self.minimum(vertice=vertice.direita)
+        parent = vertice.pai
+        child = vertice
 
-        while (y is not None and vertice == y.direita):
-            vertice = y
-            y = vertice.pai
+        while (parent != None and child==parent.direita):
+            child = parent
+            parent = child.parent
+            
+        return parent
 
-        return y
+    def tree_predecessor(self, vertice):
 
-
-    def tree_predeccessor(self, vertice=None):
         if (vertice.esquerda is not None):
-            return self.tree_maximum(vertice=vertice.esquerda)
-        y = vertice.pai
+            return self.maximum(vertice=vertice.esquerda)
+        parent = vertice.pai
+        child = vertice
 
-        while (y is not None and vertice == y.esquerda):
-            vertice = y
-            y = vertice.pai
+        while (parent is not None and child is parent.esquerda):
+            child = parent
+            parent = child.parent
 
-        return y
-    
+        return parent
 
-# testes na arvore
+
 arvore = Tree()
 arvore.TreeInsert(10)
 arvore.TreeInsert(13)
@@ -223,16 +201,13 @@ arvore.TreeInsert(8)
 arvore.TreeInsert(9)
 arvore.TreeInsert(7)
 arvore.TreeInsert(11)
+arvore.TreeInsert(2)
 arvore.TreeInsert(72)
-
-'''
-                         10
-                          
-                      8      13
-                            
-                   7    9  11   14
-                                 
-                                  72
-
-
-'''
+#print(arvore.interative_tree_search(7))
+#arvore.posorder_tree_walk()
+#arvore.inorder_tree_walk()
+#arvore.decrescente_tree_walk()
+#arvore.preorder_tree_walk()
+#print(arvore.maximum())
+#arvore.tree_sucessor(10)
+arvore.minimum(10)
